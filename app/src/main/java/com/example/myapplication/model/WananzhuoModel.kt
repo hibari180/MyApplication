@@ -27,7 +27,7 @@ class WananzhuoModel : ViewModel() {
      * 获取列表假数据
      *
      */
-    fun getFakeData(context: Context) {
+    fun getFakeData(context: Context): ProjectClassification {
         var br1 = BufferedReader(InputStreamReader(context.resources.assets.open("json.json")))
         var line: String?
         val sb1 = StringBuilder()
@@ -38,38 +38,44 @@ class WananzhuoModel : ViewModel() {
         var jsonStringAr = sb1.toString()
 
         var jsonObject = JSONObject(jsonStringAr)
-        var projectClassification = ProjectClassification()
-        projectClassification.author = jsonObject.getString("author")
-        var jsonArray = jsonObject.getJSONArray("articleList")
-        var list1: MutableList<Int>? = mutableListOf()
-        if (jsonArray != null) {
-            var index = 0
-            while (index < jsonArray.length()) {
-                list1!!.add(jsonArray.getInt(index))
-            }
-        } else list1 = null
-        projectClassification.articleList = list1
-        projectClassification.id = jsonObject.getInt("id")
-        projectClassification.cover = jsonObject.getString("cover")
-        projectClassification.desc = jsonObject.getString("desc")
-        var jsonArray1 = jsonObject.getJSONArray("children")
-        var list: MutableList<Int>? = mutableListOf()
-        if (jsonArray1 != null) {
-            var index = 0
-            while (index < jsonArray1.length()) {
-                list!!.add(jsonArray1.getInt(index))
-            }
-        } else list = null
-        projectClassification.children = list
-        projectClassification.courseId = jsonObject.getInt("courseId")
-        projectClassification.lisense = jsonObject.getString("lisense")
-        projectClassification.lisenseLink = jsonObject.getString("lisenseLink")
-        projectClassification.name = jsonObject.getString("name")
-        projectClassification.order = jsonObject.getInt("order")
-        projectClassification.parentChapterId = jsonObject.getInt("parentChapterId")
-        projectClassification.type = jsonObject.getInt("type")
-        projectClassification.userControlSetTop = jsonObject.getBoolean("userControlSetTop")
-        projectClassification.visible = jsonObject.getInt("visible")
-        Log.i("test",projectClassification.toString())
+        var projectClassList:MutableList<ProjectClassification> = mutableListOf()
+        var data = jsonObject.getJSONArray("data")
+        var i = 0
+        while (i<data.length()){
+            var projectClassification = ProjectClassification()
+            projectClassification.articleList = data.getInt(i)
+        }
+//        projectClassification.author = jsonObject.getString("author")
+//        var jsonArray = jsonObject.getJSONArray("articleList")
+//        var list1: MutableList<Int>? = mutableListOf()
+//        if (jsonArray != null) {
+//            var index = 0
+//            while (index < jsonArray.length()) {
+//                list1!!.add(jsonArray.getInt(index))
+//            }
+//        } else list1 = null
+//        projectClassification.articleList = list1
+//        projectClassification.id = jsonObject.getInt("id")
+//        projectClassification.cover = jsonObject.getString("cover")
+//        projectClassification.desc = jsonObject.getString("desc")
+//        var jsonArray1 = jsonObject.getJSONArray("children")
+//        var list: MutableList<Int>? = mutableListOf()
+//        if (jsonArray1 != null) {
+//            var index = 0
+//            while (index < jsonArray1.length()) {
+//                list!!.add(jsonArray1.getInt(index))
+//            }
+//        } else list = null
+//        projectClassification.children = list
+//        projectClassification.courseId = jsonObject.getInt("courseId")
+//        projectClassification.lisense = jsonObject.getString("lisense")
+//        projectClassification.lisenseLink = jsonObject.getString("lisenseLink")
+//        projectClassification.name = jsonObject.getString("name")
+//        projectClassification.order = jsonObject.getInt("order")
+//        projectClassification.parentChapterId = jsonObject.getInt("parentChapterId")
+//        projectClassification.type = jsonObject.getInt("type")
+//        projectClassification.userControlSetTop = jsonObject.getBoolean("userControlSetTop")
+//        projectClassification.visible = jsonObject.getInt("visible")
+        return projectClassification
     }
 }
