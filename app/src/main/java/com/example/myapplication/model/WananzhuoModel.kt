@@ -27,7 +27,7 @@ class WananzhuoModel : ViewModel() {
      *
      */
     fun getFakeData(context: Context) {
-        var br1 = BufferedReader(InputStreamReader(context.resources.assets.open("json")))
+        var br1 = BufferedReader(InputStreamReader(context.resources.assets.open("json.json")))
         var line: String?
         val sb = StringBuilder()
         while (br1.readLine().also { line = it } != null) {
@@ -35,7 +35,7 @@ class WananzhuoModel : ViewModel() {
         }
         br1.close()
         var jsonStringOb = sb.toString()
-        var br2 = BufferedReader(InputStreamReader(context.resources.assets.open("json1")))
+        var br2 = BufferedReader(InputStreamReader(context.resources.assets.open("json1.json")))
         while (br2.readLine().also { line = it } != null) {
             sb.append(line)
         }
@@ -44,7 +44,8 @@ class WananzhuoModel : ViewModel() {
 
         var jsonObject = JSONObject(jsonStringOb)
         var projectClassification = ProjectClassification()
-        var jsonArray = jsonObject.getJSONArray("articleList")
+        var jsonObject2 = JSONObject(jsonStringOb)
+        var jsonArray = jsonObject2.getJSONArray("articleList")
         projectClassification.articleList = jsonArray.toString()
         projectClassification.author = jsonObject.getString("author")
         projectClassification.id = jsonObject.getInt("id")
