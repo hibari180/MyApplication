@@ -22,7 +22,7 @@ package com.example.myapplication.entity
  * @constructor Create empty Project classification
  */
 data class ProjectClassification(
-    var articleList: String? = "",
+    var articleList: List<Int>? = null,
     var author: String? = "",
     var children: List<Int>? = null,
     var courseId: Int = 0,

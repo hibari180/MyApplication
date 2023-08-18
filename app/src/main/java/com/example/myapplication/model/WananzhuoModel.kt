@@ -1,6 +1,7 @@
 package com.example.myapplication.model
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.entity.ProjectClassification
@@ -29,25 +30,25 @@ class WananzhuoModel : ViewModel() {
     fun getFakeData(context: Context) {
         var br1 = BufferedReader(InputStreamReader(context.resources.assets.open("json.json")))
         var line: String?
-        val sb = StringBuilder()
+        val sb1 = StringBuilder()
         while (br1.readLine().also { line = it } != null) {
-            sb.append(line)
+            sb1.append(line)
         }
         br1.close()
-        var jsonStringOb = sb.toString()
-        var br2 = BufferedReader(InputStreamReader(context.resources.assets.open("json1.json")))
-        while (br2.readLine().also { line = it } != null) {
-            sb.append(line)
-        }
-        br2.close()
-        var jsonStringAr = sb.toString()
+        var jsonStringAr = sb1.toString()
 
-        var jsonObject = JSONObject(jsonStringOb)
+        var jsonObject = JSONObject(jsonStringAr)
         var projectClassification = ProjectClassification()
-        var jsonObject2 = JSONObject(jsonStringOb)
-        var jsonArray = jsonObject2.getJSONArray("articleList")
-        projectClassification.articleList = jsonArray.toString()
         projectClassification.author = jsonObject.getString("author")
+        var jsonArray = jsonObject.getJSONArray("articleList")
+        var list1: MutableList<Int>? = mutableListOf()
+        if (jsonArray != null) {
+            var index = 0
+            while (index < jsonArray.length()) {
+                list1!!.add(jsonArray.getInt(index))
+            }
+        } else list1 = null
+        projectClassification.articleList = list1
         projectClassification.id = jsonObject.getInt("id")
         projectClassification.cover = jsonObject.getString("cover")
         projectClassification.desc = jsonObject.getString("desc")
@@ -69,6 +70,6 @@ class WananzhuoModel : ViewModel() {
         projectClassification.type = jsonObject.getInt("type")
         projectClassification.userControlSetTop = jsonObject.getBoolean("userControlSetTop")
         projectClassification.visible = jsonObject.getInt("visible")
-        println(projectClassification.toString())
+        Log.i("test",projectClassification.toString())
     }
 }
